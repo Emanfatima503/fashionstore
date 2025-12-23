@@ -19,6 +19,9 @@ if(!empty($_SESSION['cart'])){
     $cartCount += $q;
   }
 }
+
+/* Determine active page */
+$currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,16 +40,23 @@ if(!empty($_SESSION['cart'])){
 
     <!-- Desktop Links -->
     <ul class="hidden sm:flex space-x-6 items-center">
-      <li><a href="index.php" class="hover:text-pink-500">Home</a></li>
-      <li><a href="shop.php" class="text-pink-500 font-semibold">Shop</a></li>
-      <li><a href="about.php" class="hover:text-pink-500">About</a></li>
-      <li><a href="privacy.php" class="hover:text-pink-500">Privacy</a></li>
-      <li><a href="contact.php" class="hover:text-pink-500">Contact</a></li>
+      <li><a href="index.php" class="<?php echo $currentPage=='index.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Home</a></li>
+      <li><a href="shop.php" class="<?php echo $currentPage=='shop.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Shop</a></li>
+      <li><a href="about.php" class="<?php echo $currentPage=='about.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">About</a></li>
+      <li><a href="privacy.php" class="<?php echo $currentPage=='privacy.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Privacy</a></li>
+      <li><a href="contact.php" class="<?php echo $currentPage=='contact.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Contact</a></li>
+
+      <!-- Cart Desktop -->
       <li class="relative">
-        <a href="cart.php" class="font-semibold hover:text-pink-500">
-          Cart
+        <a href="cart.php" class="hover:text-pink-500 relative inline-block">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5 8h14l-1.5 12h-11L5 8z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 8V6a3 3 0 016 0v2"/>
+          </svg>
           <?php if($cartCount>0){ ?>
-            <span class="ml-1 bg-pink-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+            <span class="absolute -top-2 right-0 bg-pink-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
               <?php echo $cartCount; ?>
             </span>
           <?php } ?>
@@ -56,16 +66,22 @@ if(!empty($_SESSION['cart'])){
 
     <!-- Mobile Icons -->
     <div class="sm:hidden flex items-center space-x-4">
-      <a href="cart.php" class="relative">
+      <!-- Cart Icon -->
+      <a href="cart.php" class="relative inline-block">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14l-1.5 12h-11L5 8z"/>
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 8V6a3 3 0 016 0v2"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 8h14l-1.5 12h-11L5 8z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 8V6a3 3 0 016 0v2"/>
         </svg>
         <?php if($cartCount>0){ ?>
-          <span class="absolute -top-2 -right-2 bg-pink-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"><?php echo $cartCount; ?></span>
+          <span class="absolute -top-1 right-0 bg-pink-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
+            <?php echo $cartCount; ?>
+          </span>
         <?php } ?>
       </a>
 
+      <!-- Hamburger Menu -->
       <button id="mobile-menu-button" class="focus:outline-none">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -77,11 +93,11 @@ if(!empty($_SESSION['cart'])){
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="sm:hidden hidden bg-white shadow-md">
     <ul class="flex flex-col space-y-2 p-4">
-      <li><a href="index.php" class="hover:text-pink-500">Home</a></li>
-      <li><a href="shop.php" class="text-pink-500 font-semibold">Shop</a></li>
-      <li><a href="about.php" class="hover:text-pink-500">About</a></li>
-      <li><a href="privacy.php" class="hover:text-pink-500">Privacy</a></li>
-      <li><a href="contact.php" class="hover:text-pink-500">Contact</a></li>
+      <li><a href="index.php" class="<?php echo $currentPage=='index.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Home</a></li>
+      <li><a href="shop.php" class="<?php echo $currentPage=='shop.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Shop</a></li>
+      <li><a href="about.php" class="<?php echo $currentPage=='about.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">About</a></li>
+      <li><a href="privacy.php" class="<?php echo $currentPage=='privacy.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Privacy</a></li>
+      <li><a href="contact.php" class="<?php echo $currentPage=='contact.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Contact</a></li>
     </ul>
   </div>
 </nav>

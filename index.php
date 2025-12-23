@@ -1,12 +1,19 @@
 <?php
 session_start();
 include 'includes/db.php';
-include 'navbar.php';
 
+/* CART COUNT */
+$cartCount = 0;
+if(!empty($_SESSION['cart'])){
+  foreach($_SESSION['cart'] as $q){
+    $cartCount += $q;
+  }
+}
 
+/* Determine active page */
+$currentPage = basename($_SERVER['PHP_SELF']);
 
-
-/* CART TOTAL */
+/* CART ITEMS */
 $total = 0;
 $cartItems = $_SESSION['cart'] ?? [];
 ?>
@@ -19,6 +26,79 @@ $cartItems = $_SESSION['cart'] ?? [];
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
+
+<!-- NAVBAR -->
+<nav class="bg-white shadow sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Elegance</h1>
+
+    <!-- Desktop Links -->
+    <ul class="hidden sm:flex space-x-6 items-center">
+      <li><a href="index.php" class="<?php echo $currentPage=='index.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Home</a></li>
+      <li><a href="shop.php" class="<?php echo $currentPage=='shop.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Shop</a></li>
+      <li><a href="about.php" class="<?php echo $currentPage=='about.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">About</a></li>
+      <li><a href="privacy.php" class="<?php echo $currentPage=='privacy.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Privacy</a></li>
+      <li><a href="contact.php" class="<?php echo $currentPage=='contact.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Contact</a></li>
+
+      <!-- Cart Desktop -->
+      <li class="relative">
+        <a href="cart.php" class="hover:text-pink-500 relative inline-block">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5 8h14l-1.5 12h-11L5 8z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 8V6a3 3 0 016 0v2"/>
+          </svg>
+          <?php if($cartCount>0){ ?>
+            <span class="absolute -top-2 right-0 bg-pink-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
+              <?php echo $cartCount; ?>
+            </span>
+          <?php } ?>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Mobile Icons -->
+    <div class="sm:hidden flex items-center space-x-4">
+      <a href="cart.php" class="relative inline-block">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 8h14l-1.5 12h-11L5 8z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 8V6a3 3 0 016 0v2"/>
+        </svg>
+        <?php if($cartCount>0){ ?>
+          <span class="absolute -top-1 right-0 bg-pink-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
+            <?php echo $cartCount; ?>
+          </span>
+        <?php } ?>
+      </a>
+
+      <button id="mobile-menu-button" class="focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="sm:hidden hidden bg-white shadow-md">
+    <ul class="flex flex-col space-y-2 p-4">
+      <li><a href="index.php" class="<?php echo $currentPage=='index.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Home</a></li>
+      <li><a href="shop.php" class="<?php echo $currentPage=='shop.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Shop</a></li>
+      <li><a href="about.php" class="<?php echo $currentPage=='about.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">About</a></li>
+      <li><a href="privacy.php" class="<?php echo $currentPage=='privacy.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Privacy</a></li>
+      <li><a href="contact.php" class="<?php echo $currentPage=='contact.php'?'text-pink-500 font-semibold':'hover:text-pink-500'; ?>">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+const btn = document.getElementById('mobile-menu-button');
+const menu = document.getElementById('mobile-menu');
+btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+</script>
 
 <!-- HERO SECTION -->
 <section class="relative w-full">
