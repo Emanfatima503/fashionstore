@@ -2,7 +2,7 @@
 session_start();
 
 if(!isset($_POST['id']) || !isset($_POST['action'])){
-    header("Location: index.php");
+    header("Location: cart.php");
     exit;
 }
 
@@ -11,7 +11,7 @@ $action = $_POST['action'];
 
 // Check cart exists
 if(!isset($_SESSION['cart'][$id])){
-    header("Location: index.php");
+    header("Location: cart.php");
     exit;
 }
 
@@ -28,5 +28,5 @@ if($action == "increase"){
 }
 
 // Redirect back
-header("Location: index.php");
+header("Location: cart.php");
 exit;
